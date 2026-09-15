@@ -1,0 +1,2555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LYZZ EDUQUEST</title>
+
+  <!-- =========================================================
+       SUPABASE
+       ========================================================= -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    const SUPABASE_URL =
+      "https://fpxmusloyoknpkhsrnjx.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_lYa_Ce_aTJNHC6sd36okWw_2O7K6zxm";
+
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY
+    );
+  </script>
+
+
+  <!-- =========================================================
+       STYLE
+       ========================================================= -->
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        linear-gradient(
+          135deg,
+          #eef7ff,
+          #f8f1ff
+        );
+
+      min-height: 100vh;
+      color: #1f2937;
+    }
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+
+      padding: 14px 22px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      position: sticky;
+      top: 0;
+      z-index: 20;
+
+      box-shadow:
+        0 4px 15px rgba(0,0,0,.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #2563eb
+        );
+
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 22px;
+      font-weight: 900;
+
+      box-shadow:
+        0 5px 15px rgba(79,70,229,.25);
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+
+    .user-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stat {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+
+      border-radius: 12px;
+
+      padding: 8px 12px;
+
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .logout-btn {
+      border: none;
+      background: #fee2e2;
+      color: #b91c1c;
+
+      padding: 9px 13px;
+
+      border-radius: 10px;
+
+      font-weight: 800;
+    }
+
+    .logout-btn:hover {
+      background: #fecaca;
+    }
+
+    /* =========================================================
+       GENERAL
+       ========================================================= */
+
+    .screen {
+      display: none;
+      max-width: 1050px;
+      margin: auto;
+      padding: 35px 20px 60px;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .card {
+      background: white;
+
+      border-radius: 22px;
+
+      padding: 28px;
+
+      box-shadow:
+        0 15px 45px rgba(31,41,55,.08);
+
+      border: 1px solid rgba(229,231,235,.8);
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .title {
+      font-size: 34px;
+      font-weight: 950;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .primary-btn {
+      border: none;
+
+      padding: 13px 22px;
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #2563eb
+        );
+
+      color: white;
+
+      font-size: 15px;
+      font-weight: 900;
+
+      box-shadow:
+        0 8px 20px rgba(79,70,229,.25);
+
+      transition: .2s;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .secondary-btn {
+      border: 1px solid #d1d5db;
+
+      background: white;
+
+      color: #374151;
+
+      padding: 12px 18px;
+
+      border-radius: 12px;
+
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       LOGIN
+       ========================================================= */
+
+    #authScreen {
+      max-width: 500px;
+      padding-top: 70px;
+    }
+
+    .auth-logo {
+      width: 75px;
+      height: 75px;
+
+      margin: 0 auto 20px;
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #7c3aed,
+          #2563eb
+        );
+
+      color: white;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 35px;
+      font-weight: 900;
+
+      box-shadow:
+        0 15px 30px rgba(79,70,229,.25);
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 8px;
+
+      background: #f3f4f6;
+
+      padding: 5px;
+
+      border-radius: 12px;
+
+      margin: 25px 0;
+    }
+
+    .auth-tab {
+      flex: 1;
+
+      border: none;
+      background: transparent;
+
+      padding: 11px;
+
+      border-radius: 9px;
+
+      font-weight: 800;
+
+      color: #6b7280;
+    }
+
+    .auth-tab.active {
+      background: white;
+      color: #4f46e5;
+
+      box-shadow:
+        0 2px 8px rgba(0,0,0,.07);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+
+      margin-bottom: 7px;
+
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .form-group input {
+      width: 100%;
+
+      border: 1px solid #d1d5db;
+
+      padding: 13px 14px;
+
+      border-radius: 11px;
+
+      outline: none;
+
+      font-size: 14px;
+
+      transition: .2s;
+    }
+
+    .form-group input:focus {
+      border-color: #6366f1;
+
+      box-shadow:
+        0 0 0 3px rgba(99,102,241,.12);
+    }
+
+    .auth-submit {
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .message {
+      margin-top: 15px;
+
+      padding: 12px;
+
+      border-radius: 10px;
+
+      font-size: 13px;
+
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .message.success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    /* =========================================================
+       HOME
+       ========================================================= */
+
+    .welcome {
+      margin-bottom: 25px;
+    }
+
+    .welcome h2 {
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
+
+    .access-badge {
+      display: inline-block;
+
+      padding: 7px 12px;
+
+      border-radius: 20px;
+
+      background: #dcfce7;
+
+      color: #166534;
+
+      font-size: 12px;
+      font-weight: 900;
+
+      margin-top: 10px;
+    }
+
+    .class-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 18px;
+
+      margin-top: 25px;
+    }
+
+    .class-card {
+      border: none;
+
+      background: white;
+
+      padding: 24px 18px;
+
+      border-radius: 20px;
+
+      box-shadow:
+        0 10px 30px rgba(31,41,55,.08);
+
+      border: 1px solid #e5e7eb;
+
+      transition: .2s;
+
+      text-align: left;
+    }
+
+    .class-card:hover {
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 15px 35px rgba(31,41,55,.12);
+    }
+
+    .class-number {
+      width: 48px;
+      height: 48px;
+
+      border-radius: 14px;
+
+      background: #ede9fe;
+      color: #6d28d9;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 20px;
+      font-weight: 900;
+
+      margin-bottom: 15px;
+    }
+
+    .class-card h3 {
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    .class-card p {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    /* =========================================================
+       LOCKED
+       ========================================================= */
+
+    .lock-icon {
+      font-size: 65px;
+      margin-bottom: 15px;
+    }
+
+    .locked-title {
+      font-size: 30px;
+      font-weight: 900;
+
+      margin-bottom: 10px;
+    }
+
+    .locked-box {
+      background: #fff7ed;
+
+      border: 1px solid #fed7aa;
+
+      padding: 18px;
+
+      border-radius: 14px;
+
+      margin: 25px 0;
+
+      color: #9a3412;
+
+      line-height: 1.6;
+    }
+
+    /* =========================================================
+       GAME
+       ========================================================= */
+
+    .game-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 20px;
+    }
+
+    .game-progress {
+      color: #6b7280;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .timer {
+      width: 55px;
+      height: 55px;
+
+      border-radius: 50%;
+
+      background: #eef2ff;
+
+      color: #4338ca;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 19px;
+      font-weight: 950;
+    }
+
+    .timer.danger {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .question-card {
+      text-align: center;
+    }
+
+    .question-category {
+      color: #6366f1;
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      text-transform: uppercase;
+
+      letter-spacing: .08em;
+
+      margin-bottom: 15px;
+    }
+
+    .question {
+      font-size: 30px;
+
+      font-weight: 900;
+
+      line-height: 1.4;
+
+      margin-bottom: 25px;
+    }
+
+    .answer-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 13px;
+
+      max-width: 650px;
+
+      margin: auto;
+    }
+
+    .answer-btn {
+      border: 2px solid #e5e7eb;
+
+      background: #ffffff;
+
+      padding: 17px;
+
+      border-radius: 14px;
+
+      font-size: 16px;
+
+      font-weight: 850;
+
+      transition: .15s;
+    }
+
+    .answer-btn:hover:not(:disabled) {
+      border-color: #6366f1;
+
+      background: #eef2ff;
+    }
+
+    .answer-btn.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+      color: #166534;
+    }
+
+    .answer-btn.wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #991b1b;
+    }
+
+    .answer-btn:disabled {
+      cursor: default;
+    }
+
+    .game-info {
+      display: flex;
+
+      justify-content: center;
+
+      gap: 15px;
+
+      margin-top: 25px;
+
+      flex-wrap: wrap;
+    }
+
+    .info-pill {
+      background: #f8fafc;
+
+      border: 1px solid #e5e7eb;
+
+      padding: 8px 13px;
+
+      border-radius: 20px;
+
+      font-size: 12px;
+
+      font-weight: 800;
+    }
+
+    /* =========================================================
+       RESULT
+       ========================================================= */
+
+    .result-score {
+      font-size: 65px;
+
+      font-weight: 950;
+
+      color: #4f46e5;
+
+      margin: 20px 0 5px;
+    }
+
+    .result-xp {
+      color: #ca8a04;
+
+      font-weight: 900;
+
+      margin-bottom: 25px;
+    }
+
+    .result-actions {
+      display: flex;
+
+      justify-content: center;
+
+      gap: 10px;
+
+      flex-wrap: wrap;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 750px) {
+
+      .topbar {
+        padding: 12px 14px;
+      }
+
+      .stat {
+        display: none;
+      }
+
+      .class-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .title {
+        font-size: 28px;
+      }
+
+      .question {
+        font-size: 23px;
+      }
+
+    }
+
+    @media (max-width: 500px) {
+
+      .screen {
+        padding:
+          25px 14px 45px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .class-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .answer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .brand-text h1 {
+        font-size: 15px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+  <!-- =======================================================
+       TOPBAR
+       ======================================================== -->
+
+  <header class="topbar">
+
+    <div class="brand">
+
+      <div class="brand-icon">
+        ⚡
+      </div>
+
+      <div class="brand-text">
+        <h1>LYZZ EDUQUEST</h1>
+        <p>Belajar • Bermain • Bertumbuh</p>
+      </div>
+
+    </div>
+
+
+    <div
+      class="user-area"
+      id="userArea"
+      style="display:none;"
+    >
+
+      <div class="stat">
+        ⭐ XP:
+        <span id="xpDisplay">0</span>
+      </div>
+
+      <div class="stat">
+        🏆 Level:
+        <span id="levelDisplay">1</span>
+      </div>
+
+      <button
+        class="logout-btn"
+        id="logoutBtn"
+      >
+        Keluar
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- =======================================================
+       AUTH SCREEN
+       ======================================================== -->
+
+  <section
+    class="screen active"
+    id="authScreen"
+  >
+
+    <div class="card center">
+
+      <div class="auth-logo">
+        ⚡
+      </div>
+
+      <h1 class="title">
+        LYZZ EDUQUEST
+      </h1>
+
+      <p class="subtitle">
+        Game edukasi seru untuk anak SD kelas 1–6.
+      </p>
+
+
+      <div class="auth-tabs">
+
+        <button
+          class="auth-tab active"
+          id="loginTab"
+        >
+          Login
+        </button>
+
+        <button
+          class="auth-tab"
+          id="registerTab"
+        >
+          Daftar
+        </button>
+
+      </div>
+
+
+      <!-- LOGIN -->
+
+      <form id="loginForm">
+
+        <div class="form-group">
+
+          <label>
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="loginEmail"
+            placeholder="contoh@email.com"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+            required
+          >
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="primary-btn auth-submit"
+        >
+          🚀 Masuk
+        </button>
+
+      </form>
+
+
+      <!-- REGISTER -->
+
+      <form
+        id="registerForm"
+        style="display:none;"
+      >
+
+        <div class="form-group">
+
+          <label>
+            Nama
+          </label>
+
+          <input
+            type="text"
+            id="registerName"
+            placeholder="Nama pemain"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="registerEmail"
+            placeholder="contoh@email.com"
+            required
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="registerPassword"
+            placeholder="Minimal 6 karakter"
+            minlength="6"
+            required
+          >
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="primary-btn auth-submit"
+        >
+          ✨ Buat Akun
+        </button>
+
+      </form>
+
+
+      <div
+        id="authMessage"
+        class="message"
+      ></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       LOCKED SCREEN
+       ======================================================== -->
+
+  <section
+    class="screen"
+    id="lockedScreen"
+  >
+
+    <div class="card center">
+
+      <div class="lock-icon">
+        🔒
+      </div>
+
+      <h2 class="locked-title">
+        Akses Belum Aktif
+      </h2>
+
+      <p class="subtitle">
+        Akun kamu sudah berhasil dibuat,
+        tetapi akses LYZZ EDUQUEST belum diaktifkan.
+      </p>
+
+
+      <div class="locked-box">
+
+        <strong>
+          🎮 Cara mendapatkan akses:
+        </strong>
+
+        <br><br>
+
+        Setelah pembayaran dikonfirmasi,
+        admin akan mengaktifkan akses akun kamu.
+
+        <br><br>
+
+        Setelah aktif, login kembali dan
+        kamu bisa langsung bermain.
+
+      </div>
+
+
+      <button
+        class="secondary-btn"
+        id="lockedLogoutBtn"
+      >
+        Keluar
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       HOME SCREEN
+       ======================================================== -->
+
+  <section
+    class="screen"
+    id="homeScreen"
+  >
+
+    <div class="welcome">
+
+      <h2>
+        Halo,
+        <span id="playerName">
+          Player
+        </span>
+        👋
+      </h2>
+
+      <p class="subtitle">
+        Pilih kelas dan mulai tantanganmu!
+      </p>
+
+      <span class="access-badge">
+        ✓ AKSES AKTIF
+      </span>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3 style="font-size:22px;">
+        🎓 Pilih Kelas
+      </h3>
+
+      <p
+        class="subtitle"
+        style="margin-top:6px;"
+      >
+        Pertanyaan akan diacak setiap permainan.
+      </p>
+
+
+      <div class="class-grid">
+
+        <button
+          class="class-card"
+          data-class="1"
+        >
+
+          <div class="class-number">
+            1
+          </div>
+
+          <h3>
+            Kelas 1
+          </h3>
+
+          <p>
+            Matematika dasar
+          </p>
+
+        </button>
+
+
+        <button
+          class="class-card"
+          data-class="2"
+        >
+
+          <div class="class-number">
+            2
+          </div>
+
+          <h3>
+            Kelas 2
+          </h3>
+
+          <p>
+            Penjumlahan & pengurangan
+          </p>
+
+        </button>
+
+
+        <button
+          class="class-card"
+          data-class="3"
+        >
+
+          <div class="class-number">
+            3
+          </div>
+
+          <h3>
+            Kelas 3
+          </h3>
+
+          <p>
+            Perkalian & pembagian
+          </p>
+
+        </button>
+
+
+        <button
+          class="class-card"
+          data-class="4"
+        >
+
+          <div class="class-number">
+            4
+          </div>
+
+          <h3>
+            Kelas 4
+          </h3>
+
+          <p>
+            Matematika tingkat lanjut
+          </p>
+
+        </button>
+
+
+        <button
+          class="class-card"
+          data-class="5"
+        >
+
+          <div class="class-number">
+            5
+          </div>
+
+          <h3>
+            Kelas 5
+          </h3>
+
+          <p>
+            Pecahan & operasi
+          </p>
+
+        </button>
+
+
+        <button
+          class="class-card"
+          data-class="6"
+        >
+
+          <div class="class-number">
+            6
+          </div>
+
+          <h3>
+            Kelas 6
+          </h3>
+
+          <p>
+            Tantangan persiapan SMP
+          </p>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       GAME SCREEN
+       ======================================================== -->
+
+  <section
+    class="screen"
+    id="gameScreen"
+  >
+
+    <div class="game-header">
+
+      <div class="game-progress">
+
+        Soal
+        <span id="questionNumber">
+          1
+        </span>
+        /
+        <span id="questionTotal">
+          10
+        </span>
+
+      </div>
+
+
+      <div
+        class="timer"
+        id="timer"
+      >
+        20
+      </div>
+
+    </div>
+
+
+    <div class="card question-card">
+
+      <div
+        class="question-category"
+        id="questionCategory"
+      >
+        Kelas 1
+      </div>
+
+
+      <div
+        class="question"
+        id="questionText"
+      >
+        Pertanyaan
+      </div>
+
+
+      <div
+        class="answer-grid"
+        id="answerGrid"
+      ></div>
+
+
+      <div class="game-info">
+
+        <div class="info-pill">
+          ❤️ Nyawa:
+          <span id="livesDisplay">
+            3
+          </span>
+        </div>
+
+        <div class="info-pill">
+          ⭐ Skor:
+          <span id="scoreDisplay">
+            0
+          </span>
+        </div>
+
+        <div class="info-pill">
+          🎯 XP:
+          <span id="sessionXpDisplay">
+            0
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       RESULT SCREEN
+       ======================================================== -->
+
+  <section
+    class="screen"
+    id="resultScreen"
+  >
+
+    <div class="card center">
+
+      <div style="font-size:55px;">
+        🏆
+      </div>
+
+      <h2
+        style="
+          font-size:30px;
+          margin-top:10px;
+        "
+      >
+        Permainan Selesai!
+      </h2>
+
+
+      <div
+        class="result-score"
+        id="resultScore"
+      >
+        0
+      </div>
+
+
+      <div class="result-xp">
+        +<span id="resultXp">0</span> XP
+      </div>
+
+
+      <p
+        class="subtitle"
+        id="resultMessage"
+      >
+        Hebat!
+      </p>
+
+
+      <div
+        class="result-actions"
+        style="margin-top:25px;"
+      >
+
+        <button
+          class="primary-btn"
+          id="playAgainBtn"
+        >
+          🔄 Main Lagi
+        </button>
+
+        <button
+          class="secondary-btn"
+          id="backHomeBtn"
+        >
+          🏠 Pilih Kelas
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+</div>
+
+
+<!-- =========================================================
+     GAME JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+  /* =========================================================
+     STATE
+     ========================================================= */
+
+  let currentUser = null;
+  let profile = null;
+
+  let selectedClass = null;
+
+  let questions = [];
+  let currentQuestion = 0;
+
+  let score = 0;
+  let xpEarned = 0;
+
+  let lives = 3;
+
+  let timeLeft = 20;
+  let timerInterval = null;
+
+  let answered = false;
+
+
+  /* =========================================================
+     QUESTION BANK
+     ========================================================= */
+
+  const questionBank = {
+
+    1: [
+      { q: "2 + 3 = ?", a: ["4", "5", "6", "7"], c: "5" },
+      { q: "7 - 2 = ?", a: ["4", "5", "6", "3"], c: "5" },
+      { q: "1 + 6 = ?", a: ["6", "7", "8", "9"], c: "7" },
+      { q: "9 - 4 = ?", a: ["4", "5", "6", "7"], c: "5" },
+      { q: "3 + 4 = ?", a: ["6", "7", "8", "9"], c: "7" },
+      { q: "8 - 3 = ?", a: ["4", "5", "6", "7"], c: "5" },
+      { q: "5 + 2 = ?", a: ["6", "7", "8", "9"], c: "7" },
+      { q: "10 - 6 = ?", a: ["3", "4", "5", "6"], c: "4" },
+      { q: "4 + 4 = ?", a: ["6", "7", "8", "9"], c: "8" },
+      { q: "6 - 1 = ?", a: ["4", "5", "6", "7"], c: "5" }
+    ],
+
+    2: [
+      { q: "12 + 5 = ?", a: ["15", "16", "17", "18"], c: "17" },
+      { q: "20 - 7 = ?", a: ["11", "12", "13", "14"], c: "13" },
+      { q: "15 + 8 = ?", a: ["21", "22", "23", "24"], c: "23" },
+      { q: "30 - 12 = ?", a: ["16", "17", "18", "19"], c: "18" },
+      { q: "24 + 6 = ?", a: ["28", "29", "30", "31"], c: "30" },
+      { q: "40 - 15 = ?", a: ["24", "25", "26", "27"], c: "25" },
+      { q: "18 + 7 = ?", a: ["23", "24", "25", "26"], c: "25" },
+      { q: "35 - 9 = ?", a: ["24", "25", "26", "27"], c: "26" },
+      { q: "27 + 3 = ?", a: ["28", "29", "30", "31"], c: "30" },
+      { q: "50 - 20 = ?", a: ["20", "25", "30", "35"], c: "30" }
+    ],
+
+    3: [
+      { q: "3 × 4 = ?", a: ["10", "11", "12", "13"], c: "12" },
+      { q: "24 ÷ 6 = ?", a: ["3", "4", "5", "6"], c: "4" },
+      { q: "5 × 6 = ?", a: ["25", "30", "35", "40"], c: "30" },
+      { q: "36 ÷ 4 = ?", a: ["7", "8", "9", "10"], c: "9" },
+      { q: "7 × 3 = ?", a: ["18", "20", "21", "24"], c: "21" },
+      { q: "45 ÷ 5 = ?", a: ["7", "8", "9", "10"], c: "9" },
+      { q: "8 × 4 = ?", a: ["28", "30", "32", "34"], c: "32" },
+      { q: "42 ÷ 7 = ?", a: ["5", "6", "7", "8"], c: "6" },
+      { q: "9 × 5 = ?", a: ["40", "45", "50", "55"], c: "45" },
+      { q: "56 ÷ 8 = ?", a: ["6", "7", "8", "9"], c: "7" }
+    ],
+
+    4: [
+      { q: "125 + 75 = ?", a: ["190", "200", "210", "220"], c: "200" },
+      { q: "300 - 125 = ?", a: ["165", "175", "185", "195"], c: "175" },
+      { q: "25 × 4 = ?", a: ["80", "90", "100", "110"], c: "100" },
+      { q: "144 ÷ 12 = ?", a: ["10", "11", "12", "13"], c: "12" },
+      { q: "250 + 150 = ?", a: ["350", "400", "450", "500"], c: "400" },
+      { q: "500 - 275 = ?", a: ["215", "225", "235", "245"], c: "225" },
+      { q: "15 × 6 = ?", a: ["80", "90", "100", "110"], c: "90" },
+      { q: "180 ÷ 9 = ?", a: ["18", "20", "22", "24"], c: "20" },
+      { q: "45 × 2 = ?", a: ["80", "90", "100", "110"], c: "90" },
+      { q: "240 ÷ 6 = ?", a: ["30", "40", "50", "60"], c: "40" }
+    ],
+
+    5: [
+      { q: "1/2 + 1/2 = ?", a: ["1/2", "1", "2", "0"], c: "1" },
+      { q: "3/4 - 1/4 = ?", a: ["1/4", "1/2", "3/4", "1"], c: "1/2" },
+      { q: "2/5 + 1/5 = ?", a: ["2/5", "3/5", "4/5", "1"], c: "3/5" },
+      { q: "5/6 - 2/6 = ?", a: ["2/6", "3/6", "4/6", "5/6"], c: "3/6" },
+      { q: "1/4 + 2/4 = ?", a: ["1/4", "2/4", "3/4", "4/4"], c: "3/4" },
+      { q: "7/8 - 3/8 = ?", a: ["3/8", "4/8", "5/8", "6/8"], c: "4/8" },
+      { q: "2/3 + 1/3 = ?", a: ["1/3", "2/3", "3/3", "4/3"], c: "3/3" },
+      { q: "4/5 - 1/5 = ?", a: ["2/5", "3/5", "4/5", "5/5"], c: "3/5" },
+      { q: "1/6 + 2/6 = ?", a: ["2/6", "3/6", "4/6", "5/6"], c: "3/6" },
+      { q: "5/7 - 2/7 = ?", a: ["2/7", "3/7", "4/7", "5/7"], c: "3/7" }
+    ],
+
+    6: [
+      { q: "25% dari 200 = ?", a: ["25", "40", "50", "75"], c: "50" },
+      { q: "50% dari 80 = ?", a: ["20", "30", "40", "50"], c: "40" },
+      { q: "3/4 dari 100 = ?", a: ["25", "50", "75", "80"], c: "75" },
+      { q: "2³ = ?", a: ["4", "6", "8", "9"], c: "8" },
+      { q: "144 ÷ 12 = ?", a: ["10", "11", "12", "13"], c: "12" },
+      { q: "15 × 12 = ?", a: ["160", "170", "180", "190"], c: "180" },
+      { q: "20% dari 150 = ?", a: ["20", "25", "30", "35"], c: "30" },
+      { q: "3/5 dari 100 = ?", a: ["40", "50", "60", "70"], c: "60" },
+      { q: "9² = ?", a: ["72", "81", "90", "99"], c: "81" },
+      { q: "200 - 75 + 25 = ?", a: ["125", "150", "175", "200"], c: "150" }
+    ]
+
+  };
+
+
+  /* =========================================================
+     HELPER
+     ========================================================= */
+
+  function $(id) {
+    return document.getElementById(id);
+  }
+
+
+  function showScreen(id) {
+
+    document
+      .querySelectorAll(".screen")
+      .forEach(screen => {
+        screen.classList.remove("active");
+      });
+
+    $(id).classList.add("active");
+  }
+
+
+  function showMessage(
+    message,
+    type = "error"
+  ) {
+
+    const box = $("authMessage");
+
+    box.textContent = message;
+
+    box.className =
+      "message show " + type;
+
+  }
+
+
+  /* =========================================================
+     AUTH TAB
+     ========================================================= */
+
+  $("loginTab").addEventListener(
+    "click",
+    () => {
+
+      $("loginTab")
+        .classList.add("active");
+
+      $("registerTab")
+        .classList.remove("active");
+
+      $("loginForm")
+        .style.display = "block";
+
+      $("registerForm")
+        .style.display = "none";
+
+      $("authMessage")
+        .className = "message";
+
+    }
+  );
+
+
+  $("registerTab").addEventListener(
+    "click",
+    () => {
+
+      $("registerTab")
+        .classList.add("active");
+
+      $("loginTab")
+        .classList.remove("active");
+
+      $("loginForm")
+        .style.display = "none";
+
+      $("registerForm")
+        .style.display = "block";
+
+      $("authMessage")
+        .className = "message";
+
+    }
+  );
+
+
+  /* =========================================================
+     REGISTER
+     ========================================================= */
+
+  $("registerForm").addEventListener(
+    "submit",
+    async (event) => {
+
+      event.preventDefault();
+
+      const nama =
+        $("registerName").value.trim();
+
+      const email =
+        $("registerEmail").value.trim();
+
+      const password =
+        $("registerPassword").value;
+
+
+      if (!nama || !email || !password) {
+
+        showMessage(
+          "Lengkapi semua data terlebih dahulu."
+        );
+
+        return;
+      }
+
+
+      showMessage(
+        "Membuat akun...",
+        "success"
+      );
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signUp({
+
+          email: email,
+
+          password: password,
+
+          options: {
+
+            data: {
+              nama: nama
+            }
+
+          }
+
+        });
+
+
+      if (error) {
+
+        showMessage(
+          error.message
+        );
+
+        return;
+      }
+
+
+      if (data.user) {
+
+        showMessage(
+          "Akun berhasil dibuat. Silakan cek email jika verifikasi email aktif.",
+          "success"
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================================================
+     LOGIN
+     ========================================================= */
+
+  $("loginForm").addEventListener(
+    "submit",
+    async (event) => {
+
+      event.preventDefault();
+
+
+      const email =
+        $("loginEmail").value.trim();
+
+      const password =
+        $("loginPassword").value;
+
+
+      showMessage(
+        "Memeriksa akun...",
+        "success"
+      );
+
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth.signInWithPassword({
+
+          email: email,
+
+          password: password
+
+        });
+
+
+      if (error) {
+
+        showMessage(
+          "Login gagal: " + error.message
+        );
+
+        return;
+      }
+
+
+      currentUser =
+        data.user;
+
+
+      await loadProfile();
+
+    }
+  );
+
+
+  /* =========================================================
+     LOAD PROFILE
+     ========================================================= */
+
+  async function loadProfile() {
+
+    if (!currentUser) {
+
+      showScreen("authScreen");
+
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("profiles")
+        .select(
+          "id,nama,akses,xp,level"
+        )
+        .eq(
+          "id",
+          currentUser.id
+        )
+        .maybeSingle();
+
+
+    if (error) {
+
+      console.error(error);
+
+      showMessage(
+        "Gagal mengambil profil: " +
+        error.message
+      );
+
+      return;
+    }
+
+
+    profile = data;
+
+
+    if (!profile) {
+
+      showMessage(
+        "Profil belum tersedia. Silakan coba login kembali."
+      );
+
+      return;
+    }
+
+
+    updateProfileUI();
+
+
+    /*
+      INI BAGIAN PALING PENTING.
+
+      Jika akses = false,
+      pengguna tidak boleh masuk game.
+    */
+
+    if (profile.akses !== true) {
+
+      showScreen("lockedScreen");
+
+      return;
+    }
+
+
+    showHomeScreen();
+
+  }
+
+
+  /* =========================================================
+     UPDATE UI PROFILE
+     ========================================================= */
+
+  function updateProfileUI() {
+
+    const nama =
+      profile?.nama ||
+      "Player";
+
+
+    $("playerName")
+      .textContent = nama;
+
+
+    $("xpDisplay")
+      .textContent =
+      profile?.xp || 0;
+
+
+    $("levelDisplay")
+      .textContent =
+      profile?.level || 1;
+
+
+    $("userArea")
+      .style.display = "flex";
+
+  }
+
+
+  /* =========================================================
+     HOME
+     ========================================================= */
+
+  function showHomeScreen() {
+
+    showScreen("homeScreen");
+
+    updateProfileUI();
+
+  }
+
+
+  /* =========================================================
+     LOGOUT
+     ========================================================= */
+
+  async function logoutUser() {
+
+    clearInterval(timerInterval);
+
+    await supabaseClient.auth.signOut();
+
+    currentUser = null;
+
+    profile = null;
+
+    $("userArea")
+      .style.display = "none";
+
+    showScreen("authScreen");
+
+  }
+
+
+  $("logoutBtn")
+    .addEventListener(
+      "click",
+      logoutUser
+    );
+
+
+  $("lockedLogoutBtn")
+    .addEventListener(
+      "click",
+      logoutUser
+    );
+
+
+  /* =========================================================
+     START GAME
+     ========================================================= */
+
+  document
+    .querySelectorAll(".class-card")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => {
+
+          const classNumber =
+            Number(
+              button.dataset.class
+            );
+
+          startGame(classNumber);
+
+        }
+      );
+
+    });
+
+
+  function startGame(classNumber) {
+
+    /*
+      Cek ulang akses sebelum game.
+      Jadi walaupun UI dimanipulasi,
+      kita tetap memeriksa profile.
+    */
+
+    if (
+      !profile ||
+      profile.akses !== true
+    ) {
+
+      showLockedScreen();
+
+      return;
+    }
+
+
+    selectedClass =
+      classNumber;
+
+
+    /*
+      Acak soal
+    */
+
+    questions =
+      [...questionBank[classNumber]]
+        .sort(
+          () =>
+            Math.random() - 0.5
+        )
+        .slice(0, 10);
+
+
+    currentQuestion = 0;
+
+    score = 0;
+
+    xpEarned = 0;
+
+    lives = 3;
+
+
+    $("questionTotal")
+      .textContent =
+      questions.length;
+
+
+    updateGameStats();
+
+    showScreen("gameScreen");
+
+    renderQuestion();
+
+  }
+
+
+  /* =========================================================
+     RENDER QUESTION
+     ========================================================= */
+
+  function renderQuestion() {
+
+    clearInterval(timerInterval);
+
+
+    if (
+      currentQuestion >=
+      questions.length
+    ) {
+
+      finishGame();
+
+      return;
+    }
+
+
+    answered = false;
+
+
+    const question =
+      questions[currentQuestion];
+
+
+    $("questionNumber")
+      .textContent =
+      currentQuestion + 1;
+
+
+    $("questionCategory")
+      .textContent =
+      "KELAS " +
+      selectedClass;
+
+
+    $("questionText")
+      .textContent =
+      question.q;
+
+
+    const answerGrid =
+      $("answerGrid");
+
+
+    answerGrid.innerHTML = "";
+
+
+    /*
+      Acak pilihan jawaban
+    */
+
+    const answers =
+      [...question.a]
+        .sort(
+          () =>
+            Math.random() - 0.5
+        );
+
+
+    answers.forEach(
+      answer => {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.className =
+          "answer-btn";
+
+
+        button.textContent =
+          answer;
+
+
+        button.addEventListener(
+          "click",
+          () =>
+            checkAnswer(
+              answer,
+              button
+            )
+        );
+
+
+        answerGrid.appendChild(
+          button
+        );
+
+      }
+    );
+
+
+    startTimer();
+
+  }
+
+
+  /* =========================================================
+     CHECK ANSWER
+     ========================================================= */
+
+  function checkAnswer(
+    answer,
+    clickedButton
+  ) {
+
+    if (answered) {
+      return;
+    }
+
+
+    answered = true;
+
+
+    clearInterval(
+      timerInterval
+    );
+
+
+    const question =
+      questions[currentQuestion];
+
+
+    const buttons =
+      document.querySelectorAll(
+        ".answer-btn"
+      );
+
+
+    buttons.forEach(
+      button => {
+
+        button.disabled = true;
+
+
+        if (
+          button.textContent ===
+          question.c
+        ) {
+
+          button.classList.add(
+            "correct"
+          );
+
+        }
+
+      }
+    );
+
+
+    if (
+      answer === question.c
+    ) {
+
+      clickedButton.classList.add(
+        "correct"
+      );
+
+
+      score += 10;
+
+      xpEarned += 10;
+
+    }
+    else {
+
+      clickedButton.classList.add(
+        "wrong"
+      );
+
+
+      lives--;
+
+      /*
+        Jika nyawa habis,
+        permainan selesai.
+      */
+
+      if (lives <= 0) {
+
+        updateGameStats();
+
+
+        setTimeout(
+          finishGame,
+          900
+        );
+
+        return;
+      }
+
+    }
+
+
+    updateGameStats();
+
+
+    setTimeout(
+      () => {
+
+        currentQuestion++;
+
+        renderQuestion();
+
+      },
+      700
+    );
+
+  }
+
+
+  /* =========================================================
+     TIME OUT
+     ========================================================= */
+
+  function handleTimeOut() {
+
+    if (answered) {
+      return;
+    }
+
+
+    answered = true;
+
+
+    clearInterval(
+      timerInterval
+    );
+
+
+    const question =
+      questions[currentQuestion];
+
+
+    const buttons =
+      document.querySelectorAll(
+        ".answer-btn"
+      );
+
+
+    buttons.forEach(
+      button => {
+
+        button.disabled = true;
+
+
+        if (
+          button.textContent ===
+          question.c
+        ) {
+
+          button.classList.add(
+            "correct"
+          );
+
+        }
+
+      }
+    );
+
+
+    lives--;
+
+
+    updateGameStats();
+
+
+    if (lives <= 0) {
+
+      setTimeout(
+        finishGame,
+        900
+      );
+
+      return;
+    }
+
+
+    setTimeout(
+      () => {
+
+        currentQuestion++;
+
+        renderQuestion();
+
+      },
+      700
+    );
+
+  }
+
+
+  /* =========================================================
+     TIMER
+     ========================================================= */
+
+  function startTimer() {
+
+    timeLeft = 20;
+
+
+    const timer =
+      $("timer");
+
+
+    timer.textContent =
+      timeLeft;
+
+
+    timer.classList.remove(
+      "danger"
+    );
+
+
+    timerInterval =
+      setInterval(
+        () => {
+
+          timeLeft--;
+
+
+          timer.textContent =
+            timeLeft;
+
+
+          if (timeLeft <= 5) {
+
+            timer.classList.add(
+              "danger"
+            );
+
+          }
+
+
+          if (timeLeft <= 0) {
+
+            clearInterval(
+              timerInterval
+            );
+
+            handleTimeOut();
+
+          }
+
+        },
+        1000
+      );
+
+  }
+
+
+  /* =========================================================
+     GAME STATS
+     ========================================================= */
+
+  function updateGameStats() {
+
+    $("scoreDisplay")
+      .textContent =
+      score;
+
+
+    $("livesDisplay")
+      .textContent =
+      lives;
+
+
+    $("sessionXpDisplay")
+      .textContent =
+      xpEarned;
+
+  }
+
+
+  /* =========================================================
+     FINISH GAME
+     ========================================================= */
+
+  function finishGame() {
+
+    clearInterval(
+      timerInterval
+    );
+
+
+    $("resultScore")
+      .textContent =
+      score;
+
+
+    $("resultXp")
+      .textContent =
+      xpEarned;
+
+
+    let message;
+
+
+    if (score >= 90) {
+
+      message =
+        "🌟 Luar biasa! Kamu jago sekali!";
+
+    }
+    else if (score >= 70) {
+
+      message =
+        "🎉 Hebat! Terus pertahankan!";
+
+    }
+    else if (score >= 50) {
+
+      message =
+        "👍 Bagus! Terus latihan ya!";
+
+    }
+    else {
+
+      message =
+        "💪 Jangan menyerah! Coba lagi!";
+
+    }
+
+
+    $("resultMessage")
+      .textContent =
+      message;
+
+
+    showScreen(
+      "resultScreen"
+    );
+
+  }
+
+
+  /* =========================================================
+     PLAY AGAIN
+     ========================================================= */
+
+  $("playAgainBtn")
+    .addEventListener(
+      "click",
+      () => {
+
+        if (selectedClass) {
+
+          startGame(
+            selectedClass
+          );
+
+        }
+
+      }
+    );
+
+
+  /* =========================================================
+     BACK HOME
+     ========================================================= */
+
+  $("backHomeBtn")
+    .addEventListener(
+      "click",
+      () => {
+
+        showHomeScreen();
+
+      }
+    );
+
+
+  /* =========================================================
+     SUPABASE AUTH STATE
+     ========================================================= */
+
+  supabaseClient.auth
+    .onAuthStateChange(
+      async (
+        event,
+        session
+      ) => {
+
+        /*
+          Jika ada session,
+          ambil user dan profile.
+        */
+
+        if (session?.user) {
+
+          currentUser =
+            session.user;
+
+          await loadProfile();
+
+        }
+        else {
+
+          currentUser = null;
+
+          profile = null;
+
+          $("userArea")
+            .style.display = "none";
+
+          showScreen(
+            "authScreen"
+          );
+
+        }
+
+      }
+    );
+
+
+  /* =========================================================
+     INITIAL SESSION CHECK
+     ========================================================= */
+
+  async function checkExistingSession() {
+
+    const {
+      data
+    } =
+      await supabaseClient.auth
+        .getSession();
+
+
+    if (data?.session?.user) {
+
+      currentUser =
+        data.session.user;
+
+      await loadProfile();
+
+    }
+    else {
+
+      showScreen(
+        "authScreen"
+      );
+
+    }
+
+  }
+
+
+  checkExistingSession();
+
+
+  /* =========================================================
+     KEYBOARD SUPPORT
+     ========================================================= */
+
+  document.addEventListener(
+    "keydown",
+    event => {
+
+      if (
+        !$("gameScreen")
+          .classList.contains("active")
+      ) {
+
+        return;
+      }
+
+
+      const buttons =
+        document.querySelectorAll(
+          ".answer-btn"
+        );
+
+
+      /*
+        Tekan 1 / 2 / 3 / 4
+        untuk memilih jawaban.
+      */
+
+      const key =
+        Number(event.key);
+
+
+      if (
+        key >= 1 &&
+        key <= 4 &&
+        buttons[key - 1]
+      ) {
+
+        buttons[key - 1].click();
+
+      }
+
+    }
+  );
+
+
+</script>
+
+</body>
+</html>
